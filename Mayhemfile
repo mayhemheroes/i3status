@@ -1,0 +1,5 @@
+project: rnshah9/i3status
+target: i3status
+
+cmds:
+  - cmd: /repo/build/i3status -c @@
