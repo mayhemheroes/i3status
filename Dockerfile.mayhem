@@ -5,14 +5,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf libconfuse-dev li
 
 COPY . /repo
 WORKDIR /repo/build
-RUN meson ..
-RUN ninja
-
-RUN mkdir -p /deps
-RUN ldd /repo/build/i3status | tr -s '[:blank:]' '\n' | grep '^/' | xargs -I % sh -c 'cp % /deps;'
+RUN meson .. --prefix=/install
+RUN ninja install
 
 FROM ubuntu:20.04 as package
-
-COPY --from=builder /deps /deps
-COPY --from=builder /repo/build/i3status /repo/build/i3status
-ENV LD_LIBRARY_PATH=/deps
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libconfuse-dev libyajl-dev libasound2-dev libpulse-dev libnl-genl-3-dev
+COPY --from=builder /install /install

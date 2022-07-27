@@ -2,4 +2,4 @@ project: i3status
 target: i3status
 
 cmds:
-  - cmd: /repo/build/i3status -c @@
+  - cmd: /install/bin/i3status -c @@
