@@ -59,7 +59,8 @@ jobs:
       fail-fast: false
       matrix:
         mayhemfile:
-          - mayhem/Mayhemfile
+          - mayhem/Mayhemfile_i3status
+          - mayhem/Mayhemfile_resolve_tilde
 
     steps:
       - uses: actions/checkout@v3

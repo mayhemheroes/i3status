@@ -1,0 +1,8 @@
+project: i3status
+target: resolve-tilde
+
+cmds:
+  - cmd: /fuzz_resolve_tilde
+    libfuzzer: true
+    env:
+      ASAN_OPTIONS: detect_leaks=0
