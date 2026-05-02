@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:20.04 as builder
+FROM ubuntu:20.04 AS builder
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y autoconf libconfuse-dev libyajl-dev libasound2-dev libiw-dev asciidoc libpulse-dev libnl-genl-3-dev meson build-essential clang
@@ -9,7 +9,7 @@ RUN meson .. --prefix=/install
 RUN ninja install
 RUN clang++ /repo/mayhem/fuzz_resolve_tilde.cpp /repo/build/i3status@exe/src_general.c.o -fsanitize=fuzzer,address -o /fuzz
 
-FROM ubuntu:20.04 as package
+FROM ubuntu:20.04 AS package
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libconfuse-dev libyajl-dev libasound2-dev libpulse-dev libnl-genl-3-dev
 COPY --from=builder /install /install
